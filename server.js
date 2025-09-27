@@ -64,15 +64,18 @@ function MenuItem({ pizza }) {
   );
 }
 
+const htmlTemplate = readFileSync('./index.html', 'utf-8');
+
 const server = createServer((req, res) => {
   const pathName = parse(req.url, true).pathname;
   const renderedHtml = renderToString(<Home />);
+  const html = htmlTemplate.replace('%%%CONTENT%%%', renderedHtml);
 
   if (pathName === '/') {
     res.writeHead(200, {
       'Content-type': 'text/html',
     });
-    res.end(renderedHtml);
+    res.end(html);
   } else if (pathName === '/test') {
     res.end('TEST');
   } else {
