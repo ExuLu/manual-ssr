@@ -1,10 +1,12 @@
 const { createServer } = require('http');
-const { parse } = require('path');
+const { parse } = require('url');
 
 const server = createServer((req, res) => {
-  if (req.url === '/') {
+  const pathName = parse(req.url, true).pathname;
+
+  if (pathName === '/') {
     res.end('Hello world');
-  } else if (req.url === '/test') {
+  } else if (pathName === '/test') {
     res.end('TEST');
   } else {
     res.end('The URL cannot be found');
